@@ -35,12 +35,12 @@ class InstrumentoService {
 
     public List<InstrumentoDTO> getAllInstrumentos() {
         List<Instrumento> instrumentos = instrumentoRepo.findAll();
-        List<InstrumentoDTO> instrumentoDTOS = new ArrayList<>();
+        List<InstrumentoDTO> instrumentoDTOs = new ArrayList<>();
 
         for (Instrumento instrumento : instrumentos) {
-            instrumentoDTOS.add(toDTO(instrumento));
+            instrumentoDTOs.add(toDTO(instrumento));
         }
-        return instrumentoDTOS;
+        return instrumentoDTOs;
     }
 
     public void updateInstrumento(Long id, InstrumentoDTO instrumentoDTO) {
