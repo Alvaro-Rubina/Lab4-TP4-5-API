@@ -11,4 +11,5 @@ public class CategoriaInstrumentoDTO {
 
     private Long id;
     private String nombre;
+    private Boolean activo;
 }
