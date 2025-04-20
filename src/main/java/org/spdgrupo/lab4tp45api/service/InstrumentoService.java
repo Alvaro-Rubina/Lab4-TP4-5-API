@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-class InstrumentoService {
+public class InstrumentoService {
 
     @Autowired
     private InstrumentoRepository instrumentoRepo;
@@ -91,7 +91,7 @@ class InstrumentoService {
         instrumentoRepo.save(instrumento);
     }
 
-    public void deleteInstrumentoById(Long id) {
+    public void deleteInstrumento(Long id) {
         Instrumento instrumento = instrumentoRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Instrumento con el id " + id + " no encontrado"));
         instrumento.setActivo(false);
