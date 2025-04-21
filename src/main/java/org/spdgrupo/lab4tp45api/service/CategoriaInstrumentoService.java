@@ -44,6 +44,10 @@ public class CategoriaInstrumentoService {
             categoriaInstrumento.setNombre(categoriaInstrumentoDTO.getNombre());
         }
 
+        if (categoriaInstrumento.isActivo() != categoriaInstrumentoDTO.isActivo()) {
+            categoriaInstrumento.setActivo(categoriaInstrumentoDTO.isActivo());
+        }
+
         categoriaInstrumentoRepo.save(categoriaInstrumento);
     }
 
@@ -58,7 +62,7 @@ public class CategoriaInstrumentoService {
     private CategoriaInstrumento toEntity(CategoriaInstrumentoDTO categoriaInstrumentoDTO) {
         return CategoriaInstrumento.builder()
                 .nombre(categoriaInstrumentoDTO.getNombre())
-                .activo(categoriaInstrumentoDTO.getActivo())
+                .activo(categoriaInstrumentoDTO.isActivo())
                 .build();
     }
 
@@ -66,7 +70,7 @@ public class CategoriaInstrumentoService {
         return CategoriaInstrumentoDTO.builder()
                 .id(categoriaInstrumento.getId())
                 .nombre(categoriaInstrumento.getNombre())
-                .activo(categoriaInstrumento.getActivo())
+                .activo(categoriaInstrumento.isActivo())
                 .build();
     }
 }

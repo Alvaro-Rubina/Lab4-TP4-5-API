@@ -79,8 +79,8 @@ public class InstrumentoService {
             instrumento.setCantidadVendida(instrumentoDTO.getCantidadVendida());
         }
 
-        if (!instrumento.getActivo().equals(instrumentoDTO.getActivo())) {
-            instrumento.setActivo(instrumentoDTO.getActivo());
+        if (instrumento.isActivo() != instrumentoDTO.isActivo()) {
+            instrumento.setActivo(instrumentoDTO.isActivo());
         }
 
         if (!instrumento.getCategoria().getId().equals(instrumentoDTO.getCategoria().getId())) {
@@ -109,7 +109,7 @@ public class InstrumentoService {
                 .precio(instrumentoDTO.getPrecio())
                 .costoEnvio(instrumentoDTO.getCostoEnvio())
                 .cantidadVendida(instrumentoDTO.getCantidadVendida())
-                .activo(instrumentoDTO.getActivo())
+                .activo(instrumentoDTO.isActivo())
                 .categoria(categoriaInstrumentoRepo.findById(instrumentoDTO.getCategoria().getId())
                         .orElseThrow(() -> new NotFoundException("Cagegoria con el id " + instrumentoDTO.getCategoria().getId() + " no encontrado")))
                 .build();
@@ -126,7 +126,7 @@ public class InstrumentoService {
                 .precio(instrumento.getPrecio())
                 .costoEnvio(instrumento.getCostoEnvio())
                 .cantidadVendida(instrumento.getCantidadVendida())
-                .activo(instrumento.getActivo())
+                .activo(instrumento.isActivo())
                 .categoria(categoriaInstrumentoService.toDTO(instrumento.getCategoria()))
                 .build();
     }
