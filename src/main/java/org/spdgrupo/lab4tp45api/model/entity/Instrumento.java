@@ -22,7 +22,7 @@ public class Instrumento {
     private Double precio;
     private String costoEnvio;
     private int cantidadVendida;
-    private Boolean activo;
+    private boolean activo;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")

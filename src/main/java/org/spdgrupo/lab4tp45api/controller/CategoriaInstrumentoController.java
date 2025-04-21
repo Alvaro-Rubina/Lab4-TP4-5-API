@@ -1,5 +1,6 @@
 package org.spdgrupo.lab4tp45api.controller;
 
+import jakarta.validation.Valid;
 import org.spdgrupo.lab4tp45api.model.dto.CategoriaInstrumentoDTO;
 import org.spdgrupo.lab4tp45api.service.CategoriaInstrumentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ class CategoriaInstrumentoController {
     private CategoriaInstrumentoService categoriaInstrumentoService;
 
     @PostMapping
-    public ResponseEntity<String> saveCategoria(@RequestBody CategoriaInstrumentoDTO categoriaDTO) {
+    public ResponseEntity<String> saveCategoria(@Valid @RequestBody CategoriaInstrumentoDTO categoriaDTO) {
         categoriaInstrumentoService.saveCategoriaInstrumento(categoriaDTO);
         return ResponseEntity.ok("Categoría guardada correctamente");
     }
@@ -37,7 +38,7 @@ class CategoriaInstrumentoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCategoria(@PathVariable Long id,
-                                                  @RequestBody CategoriaInstrumentoDTO categoriaDTO) {
+                                                  @Valid @RequestBody CategoriaInstrumentoDTO categoriaDTO) {
         categoriaInstrumentoService.updateCategoriaInstrumento(id, categoriaDTO);
         return ResponseEntity.ok("Categoría actualizada correctamente");
     }

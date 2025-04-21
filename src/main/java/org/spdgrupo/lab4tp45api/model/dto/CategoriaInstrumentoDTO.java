@@ -1,5 +1,6 @@
 package org.spdgrupo.lab4tp45api.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @NoArgsConstructor
@@ -10,6 +11,9 @@ import lombok.*;
 public class CategoriaInstrumentoDTO {
 
     private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
-    private Boolean activo;
+
+    private boolean activo;
 }
