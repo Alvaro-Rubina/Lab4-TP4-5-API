@@ -43,7 +43,7 @@ class CategoriaInstrumentoController {
         return ResponseEntity.ok("Categoría actualizada correctamente");
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategoriaById(@PathVariable Long id) {
         categoriaInstrumentoService.deleteCategoriaInstrumento(id);
         return ResponseEntity.ok("Categoría eliminada correctamente");

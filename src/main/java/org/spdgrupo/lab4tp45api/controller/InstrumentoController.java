@@ -43,7 +43,7 @@ class InstrumentoController {
         return ResponseEntity.ok("Instrumento actualizado correctamente");
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteInstrumentoById(@PathVariable Long id) {
         instrumentoService.deleteInstrumento(id);
         return ResponseEntity.ok("Instrumento eliminado correctamente");
