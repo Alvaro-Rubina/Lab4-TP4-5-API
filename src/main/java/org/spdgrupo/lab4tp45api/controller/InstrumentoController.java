@@ -1,5 +1,6 @@
 package org.spdgrupo.lab4tp45api.controller;
 
+import jakarta.validation.Valid;
 import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
 import org.spdgrupo.lab4tp45api.service.InstrumentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ class InstrumentoController {
     private InstrumentoService instrumentoService;
 
     @PostMapping
-    public ResponseEntity<String> saveInstrumento(@RequestBody InstrumentoDTO instrumentoDTO) {
+    public ResponseEntity<String> saveInstrumento(@Valid @RequestBody InstrumentoDTO instrumentoDTO) {
         instrumentoService.saveInstrumento(instrumentoDTO);
         return ResponseEntity.ok("Instrumento guardado correctamente");
     }
@@ -37,7 +38,7 @@ class InstrumentoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateInstrumento(@PathVariable Long id,
-                                                    @RequestBody InstrumentoDTO instrumentoDTO) {
+                                                    @Valid @RequestBody InstrumentoDTO instrumentoDTO) {
         instrumentoService.updateInstrumento(id, instrumentoDTO);
         return ResponseEntity.ok("Instrumento actualizado correctamente");
     }
