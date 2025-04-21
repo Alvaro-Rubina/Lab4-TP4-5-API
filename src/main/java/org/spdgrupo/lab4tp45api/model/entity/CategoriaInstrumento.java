@@ -18,5 +18,5 @@ public class CategoriaInstrumento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private Boolean activo;
+    private boolean activo;
 }
