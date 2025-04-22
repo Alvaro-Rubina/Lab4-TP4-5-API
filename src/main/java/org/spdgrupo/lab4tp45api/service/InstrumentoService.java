@@ -83,11 +83,6 @@ public class InstrumentoService {
             instrumento.setActivo(instrumentoDTO.isActivo());
         }
 
-        if (!instrumento.getCategoria().getId().equals(instrumentoDTO.getCategoria().getId())) {
-            instrumento.setCategoria(categoriaInstrumentoRepo.findById(instrumentoDTO.getCategoria().getId())
-                    .orElseThrow(() -> new NotFoundException("Cagegoria con el id " + instrumentoDTO.getCategoria().getId() + " no encontrado")));
-        }
-
         instrumentoRepo.save(instrumento);
     }
 
@@ -110,8 +105,7 @@ public class InstrumentoService {
                 .costoEnvio(instrumentoDTO.getCostoEnvio())
                 .cantidadVendida(instrumentoDTO.getCantidadVendida())
                 .activo(instrumentoDTO.isActivo())
-                .categoria(categoriaInstrumentoRepo.findById(instrumentoDTO.getCategoria().getId())
-                        .orElseThrow(() -> new NotFoundException("Cagegoria con el id " + instrumentoDTO.getCategoria().getId() + " no encontrado")))
+                .categoria(null)
                 .build();
     }
 
@@ -127,7 +121,7 @@ public class InstrumentoService {
                 .costoEnvio(instrumento.getCostoEnvio())
                 .cantidadVendida(instrumento.getCantidadVendida())
                 .activo(instrumento.isActivo())
-                .categoria(categoriaInstrumentoService.toDTO(instrumento.getCategoria()))
+                .categoria(null)
                 .build();
     }
 
