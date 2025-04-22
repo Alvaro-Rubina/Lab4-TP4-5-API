@@ -35,4 +35,5 @@ class InstrumentoController {
         List<InstrumentoDTO> instrumentos = instrumentoService.getAllInstrumentos();
         return ResponseEntity.ok(instrumentos);
     }
+
 }
