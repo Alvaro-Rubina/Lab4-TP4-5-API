@@ -35,17 +35,4 @@ class InstrumentoController {
         List<InstrumentoDTO> instrumentos = instrumentoService.getAllInstrumentos();
         return ResponseEntity.ok(instrumentos);
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateInstrumento(@PathVariable Long id,
-                                                    @Valid @RequestBody InstrumentoDTO instrumentoDTO) {
-        instrumentoService.updateInstrumento(id, instrumentoDTO);
-        return ResponseEntity.ok("Instrumento actualizado correctamente");
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteInstrumentoById(@PathVariable Long id) {
-        instrumentoService.deleteInstrumento(id);
-        return ResponseEntity.ok("Instrumento eliminado correctamente");
-    }
 }

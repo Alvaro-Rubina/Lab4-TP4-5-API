@@ -14,7 +14,7 @@ public class Instrumento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+    private String instrumento;
     private String marca;
     private String modelo;
     private String descripcion;
@@ -22,9 +22,4 @@ public class Instrumento {
     private Double precio;
     private String costoEnvio;
     private int cantidadVendida;
-    private boolean activo;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private CategoriaInstrumento categoria;
 }

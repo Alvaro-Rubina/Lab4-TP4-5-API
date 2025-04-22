@@ -3,7 +3,6 @@ package org.spdgrupo.lab4tp45api.service;
 import org.spdgrupo.lab4tp45api.config.exception.NotFoundException;
 import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
 import org.spdgrupo.lab4tp45api.model.entity.Instrumento;
-import org.spdgrupo.lab4tp45api.repository.CategoriaInstrumentoRepository;
 import org.spdgrupo.lab4tp45api.repository.InstrumentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,6 @@ public class InstrumentoService {
 
     @Autowired
     private InstrumentoRepository instrumentoRepo;
-
-    @Autowired
-    private CategoriaInstrumentoRepository categoriaInstrumentoRepo;
-    @Autowired
-    private CategoriaInstrumentoService categoriaInstrumentoService;
 
     public void saveInstrumento(InstrumentoDTO instrumentoDTO) {
         Instrumento instrumento = toEntity(instrumentoDTO);
@@ -47,8 +41,8 @@ public class InstrumentoService {
         Instrumento instrumento = instrumentoRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Instrumento con el id " + id + " no encontrado"));
 
-        if (!instrumento.getNombre().equals(instrumentoDTO.getNombre())) {
-            instrumento.setNombre(instrumentoDTO.getNombre());
+        if (!instrumento.getInstrumento().equals(instrumentoDTO.getInstrumento())) {
+            instrumento.setInstrumento(instrumentoDTO.getInstrumento());
         }
 
         if (!instrumento.getMarca().equals(instrumentoDTO.getMarca())) {
@@ -79,24 +73,13 @@ public class InstrumentoService {
             instrumento.setCantidadVendida(instrumentoDTO.getCantidadVendida());
         }
 
-        if (instrumento.isActivo() != instrumentoDTO.isActivo()) {
-            instrumento.setActivo(instrumentoDTO.isActivo());
-        }
-
-        instrumentoRepo.save(instrumento);
-    }
-
-    public void deleteInstrumento(Long id) {
-        Instrumento instrumento = instrumentoRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Instrumento con el id " + id + " no encontrado"));
-        instrumento.setActivo(false);
         instrumentoRepo.save(instrumento);
     }
 
     // MAPPERS
     private Instrumento toEntity(InstrumentoDTO instrumentoDTO) {
         return Instrumento.builder()
-                .nombre(instrumentoDTO.getNombre())
+                .instrumento(instrumentoDTO.getInstrumento())
                 .marca(instrumentoDTO.getMarca())
                 .modelo(instrumentoDTO.getModelo())
                 .descripcion(instrumentoDTO.getDescripcion())
@@ -104,15 +87,13 @@ public class InstrumentoService {
                 .precio(instrumentoDTO.getPrecio())
                 .costoEnvio(instrumentoDTO.getCostoEnvio())
                 .cantidadVendida(instrumentoDTO.getCantidadVendida())
-                .activo(instrumentoDTO.isActivo())
-                .categoria(null)
                 .build();
     }
 
     private InstrumentoDTO toDTO(Instrumento instrumento) {
         return InstrumentoDTO.builder()
                 .id(instrumento.getId())
-                .nombre(instrumento.getNombre())
+                .instrumento(instrumento.getInstrumento())
                 .marca(instrumento.getMarca())
                 .modelo(instrumento.getModelo())
                 .descripcion(instrumento.getDescripcion())
@@ -120,8 +101,6 @@ public class InstrumentoService {
                 .precio(instrumento.getPrecio())
                 .costoEnvio(instrumento.getCostoEnvio())
                 .cantidadVendida(instrumento.getCantidadVendida())
-                .activo(instrumento.isActivo())
-                .categoria(null)
                 .build();
     }
 

@@ -13,7 +13,7 @@ public class InstrumentoDTO {
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
-    private String nombre;
+    private String instrumento;
 
     @NotBlank(message = "La marca es obligatoria")
     private String marca;
@@ -37,6 +37,4 @@ public class InstrumentoDTO {
     @NotNull(message = "La cantidad vendida es obligatoria")
     @PositiveOrZero(message = "La cantidad vendida debe ser positiva o cero")
     private int cantidadVendida;
-    private boolean activo;
-    private CategoriaInstrumentoDTO categoria;
 }
