@@ -14,7 +14,7 @@ public class Instrumento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+    private String instrumento;
     private String marca;
     private String modelo;
     private String descripcion;

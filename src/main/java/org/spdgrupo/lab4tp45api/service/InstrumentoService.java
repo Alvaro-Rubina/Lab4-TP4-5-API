@@ -47,8 +47,8 @@ public class InstrumentoService {
         Instrumento instrumento = instrumentoRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Instrumento con el id " + id + " no encontrado"));
 
-        if (!instrumento.getNombre().equals(instrumentoDTO.getNombre())) {
-            instrumento.setNombre(instrumentoDTO.getNombre());
+        if (!instrumento.getInstrumento().equals(instrumentoDTO.getInstrumento())) {
+            instrumento.setInstrumento(instrumentoDTO.getInstrumento());
         }
 
         if (!instrumento.getMarca().equals(instrumentoDTO.getMarca())) {
@@ -101,7 +101,7 @@ public class InstrumentoService {
     // MAPPERS
     private Instrumento toEntity(InstrumentoDTO instrumentoDTO) {
         return Instrumento.builder()
-                .nombre(instrumentoDTO.getNombre())
+                .instrumento(instrumentoDTO.getInstrumento())
                 .marca(instrumentoDTO.getMarca())
                 .modelo(instrumentoDTO.getModelo())
                 .descripcion(instrumentoDTO.getDescripcion())
@@ -118,7 +118,7 @@ public class InstrumentoService {
     private InstrumentoDTO toDTO(Instrumento instrumento) {
         return InstrumentoDTO.builder()
                 .id(instrumento.getId())
-                .nombre(instrumento.getNombre())
+                .instrumento(instrumento.getInstrumento())
                 .marca(instrumento.getMarca())
                 .modelo(instrumento.getModelo())
                 .descripcion(instrumento.getDescripcion())

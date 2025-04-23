@@ -13,7 +13,7 @@ public class InstrumentoDTO {
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
-    private String nombre;
+    private String instrumento;
 
     @NotBlank(message = "La marca es obligatoria")
     private String marca;
