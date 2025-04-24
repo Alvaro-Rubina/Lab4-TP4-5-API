@@ -17,6 +17,8 @@ public class Instrumento {
     private String instrumento;
     private String marca;
     private String modelo;
+
+    @Column(length = 500)
     private String descripcion;
     private String imagen;
     private Double precio;
