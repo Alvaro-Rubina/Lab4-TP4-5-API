@@ -115,7 +115,7 @@ public class InstrumentoService {
                 .build();
     }
 
-    private InstrumentoDTO toDTO(Instrumento instrumento) {
+    public InstrumentoDTO toDTO(Instrumento instrumento) {
         return InstrumentoDTO.builder()
                 .id(instrumento.getId())
                 .instrumento(instrumento.getInstrumento())
