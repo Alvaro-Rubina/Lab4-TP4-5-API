@@ -46,6 +46,13 @@ public class DetallePedidoService {
                 .map(this::toEntity)
                 .collect(Collectors.toList());
         detallePedidoRepo.saveAll(detalles);
+
+        detalles.forEach(detalle -> {
+            Pedido pedido = pedidoRepo.findById(pedidoId)
+                    .orElseThrow(() -> new NotFoundException("Pedido con el id " + pedidoId + " no encontrado"));
+            detalle.setPedido(pedido);
+        });
+        detallePedidoRepo.saveAll(detalles);
     }
 
     // MAPPERS

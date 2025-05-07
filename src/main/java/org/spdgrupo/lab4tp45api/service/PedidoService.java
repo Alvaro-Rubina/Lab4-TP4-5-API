@@ -59,12 +59,17 @@ public class PedidoService {
     }
 
     // Metodos adicionales
-    private Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidosDTO) {
+    /*private Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidosDTO) {
         Double totalPedido = 0.0;
 
         for (DetallePedidoDTO detallePedidoDTO : detallePedidosDTO) {
             totalPedido += detallePedidoDTO.getSubTotal();
         }
         return totalPedido;
+    }*/
+    public Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidos) {
+        return detallePedidos.stream()
+                .mapToDouble(detalle -> detalle.getSubTotal() != null ? detalle.getSubTotal() : 0.0)
+                .sum();
     }
 }
