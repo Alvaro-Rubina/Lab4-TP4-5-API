@@ -9,6 +9,7 @@ import org.spdgrupo.lab4tp45api.repository.DetallePedidoRepository;
 import org.spdgrupo.lab4tp45api.repository.InstrumentoRepository;
 import org.spdgrupo.lab4tp45api.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class DetallePedidoService {
     private InstrumentoRepository instrumentoRepo;
 
     @Autowired
+    @Lazy
     private PedidoService pedidoService;
 
     @Autowired
