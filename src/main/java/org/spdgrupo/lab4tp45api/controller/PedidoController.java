@@ -1,7 +1,7 @@
 package org.spdgrupo.lab4tp45api.controller;
 
-import jakarta.validation.Valid;
-import org.spdgrupo.lab4tp45api.model.dto.PedidoDTO;
+import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoDTO;
+import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoResponseDTO;
 import org.spdgrupo.lab4tp45api.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +25,15 @@ public class PedidoController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<PedidoDTO> getPedidoById(@PathVariable Long id) {
-        PedidoDTO pedidoDTO = pedidoService.getPedidoById(id);
+    public ResponseEntity<PedidoResponseDTO> getPedidoById(@PathVariable Long id) {
+        PedidoResponseDTO pedidoDTO = pedidoService.getPedidoById(id);
         return ResponseEntity.ok(pedidoDTO);
     }
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<PedidoDTO>> getAllPedidos() {
-        List<PedidoDTO> pedidos = pedidoService.getAllPedidos();
+    public ResponseEntity<List<PedidoResponseDTO>> getAllPedidos() {
+        List<PedidoResponseDTO> pedidos = pedidoService.getAllPedidos();
         return ResponseEntity.ok(pedidos);
     }
 }
