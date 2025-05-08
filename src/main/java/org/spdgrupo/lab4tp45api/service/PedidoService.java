@@ -1,8 +1,10 @@
 package org.spdgrupo.lab4tp45api.service;
 
 import org.spdgrupo.lab4tp45api.config.exception.NotFoundException;
-import org.spdgrupo.lab4tp45api.model.dto.DetallePedidoDTO;
-import org.spdgrupo.lab4tp45api.model.dto.PedidoDTO;
+import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
+import org.spdgrupo.lab4tp45api.model.dto.detallepedido.DetallePedidoDTO;
+import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoDTO;
+import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoResponseDTO;
 import org.spdgrupo.lab4tp45api.model.entity.Pedido;
 import org.spdgrupo.lab4tp45api.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +19,33 @@ public class PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepo;
+
     @Autowired
     private DetallePedidoService detallePedidoService;
+
+    @Autowired
+    private InstrumentoService instrumentoService;
 
     public void savePedido(PedidoDTO pedidoDTO) {
         Pedido pedido = toEntity(pedidoDTO);
         Pedido pedidoGuardado = pedidoRepo.save(pedido);
 
-        // Una vez guardado el producto, se guardan los detalleProductos (necesitan el id del pedido)
-        detallePedidoService.saveMultipleDetallePedidos(pedidoDTO.getDetallePedidos(), pedidoGuardado.getId());
+        detallePedidoService.saveMultipleDetallePedidos(pedidoDTO.getDetallePedidos(), pedidoGuardado);
+
+        // TODO: Esto podria cambiarlo para que se calcule en base a la entidad en lugar del dto
+        Double total = calcularTotalPedido(pedidoDTO.getDetallePedidos());
+        pedidoGuardado.setTotalPedido(total);
+
+        pedidoRepo.save(pedidoGuardado);
     }
 
-    public PedidoDTO getPedidoById(Long id) {
+    public PedidoResponseDTO getPedidoById(Long id) {
         Pedido pedido = pedidoRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pedido con el id " + id + " no encontrado"));
         return toDTO(pedido);
     }
 
-    public List<PedidoDTO> getAllPedidos() {
+    public List<PedidoResponseDTO> getAllPedidos() {
         List<Pedido> pedidos = pedidoRepo.findAll();
         return pedidos.stream().map(this::toDTO).collect(Collectors.toList());
     }
@@ -43,12 +54,11 @@ public class PedidoService {
     private Pedido toEntity(PedidoDTO pedidoDTO) {
         return Pedido.builder()
                 .fechaPedido(LocalDate.now())
-                .totalPedido(calcularTotalPedido(pedidoDTO.getDetallePedidos()))
                 .build();
     }
 
-    public PedidoDTO toDTO(Pedido pedido) {
-        return PedidoDTO.builder()
+    public PedidoResponseDTO toDTO(Pedido pedido) {
+        return PedidoResponseDTO.builder()
                 .id(pedido.getId())
                 .fechaPedido(pedido.getFechaPedido())
                 .totalPedido(pedido.getTotalPedido())
@@ -59,17 +69,12 @@ public class PedidoService {
     }
 
     // Metodos adicionales
-    /*private Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidosDTO) {
+    public Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidos) {
         Double totalPedido = 0.0;
-
-        for (DetallePedidoDTO detallePedidoDTO : detallePedidosDTO) {
-            totalPedido += detallePedidoDTO.getSubTotal();
+        for (DetallePedidoDTO detallePedido : detallePedidos) {
+            InstrumentoDTO instrumentoDTO = instrumentoService.getInstrumentoById(detallePedido.getInstrumentoId());
+            totalPedido += instrumentoDTO.getPrecio() * detallePedido.getCantidad();
         }
         return totalPedido;
-    }*/
-    public Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidos) {
-        return detallePedidos.stream()
-                .mapToDouble(detalle -> detalle.getSubTotal() != null ? detalle.getSubTotal() : 0.0)
-                .sum();
     }
 }
