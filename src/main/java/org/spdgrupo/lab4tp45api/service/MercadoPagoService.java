@@ -9,11 +9,16 @@ import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.preference.Preference;
 import jakarta.annotation.PostConstruct;
+import org.spdgrupo.lab4tp45api.model.PreferenceMP;
 import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.detallepedido.DetallePedidoDTO;
+import org.spdgrupo.lab4tp45api.model.entity.DetallePedido;
+import org.spdgrupo.lab4tp45api.model.entity.Instrumento;
+import org.spdgrupo.lab4tp45api.model.entity.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +39,10 @@ public class MercadoPagoService {
         MercadoPagoConfig.setAccessToken(testToken);
     }
 
-    public Preference createPreference(List<DetallePedidoDTO> detallePedidos) throws MPException, MPApiException {
+    public PreferenceMP createPreference(Pedido pedido) throws MPException, MPApiException {
         List<PreferenceItemRequest> items = new ArrayList<>();
 
-        for (DetallePedidoDTO detallePedido : detallePedidos) {
+        for (DetallePedido detallePedido : pedido.getDetallePedidos()) {
             PreferenceItemRequest itemRequest = getItemRequest(detallePedido);
             items.add(itemRequest);
         }
@@ -45,7 +50,7 @@ public class MercadoPagoService {
         PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                 .items(items)
                 .autoReturn("approved")
-                .additionalInfo("La empresa no se hace cargo de nada que le perjudique 😏")
+                .additionalInfo("¡Gracias por comprar en El Buen Sabor!")
                 .backUrls(
                         PreferenceBackUrlsRequest.builder()
                                 .success(sucessUrl)
@@ -56,11 +61,17 @@ public class MercadoPagoService {
                 .build();
 
         PreferenceClient client = new PreferenceClient();
-        return client.create(preferenceRequest);
+        Preference preference = client.create(preferenceRequest);
+
+        return PreferenceMP.builder()
+                .id(preference.getId())
+                .preferenceId(preference.getId())
+                .initPoint(preference.getInitPoint())
+                .build();
     }
 
-    private PreferenceItemRequest getItemRequest(DetallePedidoDTO detallePedido) {
-        InstrumentoDTO instrumento = instrumentoService.getInstrumentoById(detallePedido.getInstrumentoId());
+    private PreferenceItemRequest getItemRequest(DetallePedido detallePedido) {
+        Instrumento instrumento = detallePedido.getInstrumento();
 
         return PreferenceItemRequest.builder()
                 .id(instrumento.getId().toString())
@@ -68,8 +79,8 @@ public class MercadoPagoService {
                 .description(instrumento.getDescripcion())
                 .pictureUrl(instrumento.getImagen())
                 .quantity(detallePedido.getCantidad())
-                .currencyId("ARG") // o ARS ver cual es el id correcto
-                .unitPrice(instrumento.getPrecio())
+                .currencyId("ARS")
+                .unitPrice(BigDecimal.valueOf(instrumento.getPrecio()))
                 .build();
     }
 }

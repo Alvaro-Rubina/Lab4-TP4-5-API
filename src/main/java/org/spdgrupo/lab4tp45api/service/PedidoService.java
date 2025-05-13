@@ -1,16 +1,18 @@
 package org.spdgrupo.lab4tp45api.service;
 
+import jakarta.transaction.Transactional;
 import org.spdgrupo.lab4tp45api.config.exception.NotFoundException;
-import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.detallepedido.DetallePedidoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoResponseDTO;
+import org.spdgrupo.lab4tp45api.model.entity.DetallePedido;
 import org.spdgrupo.lab4tp45api.model.entity.Pedido;
 import org.spdgrupo.lab4tp45api.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,17 +28,10 @@ public class PedidoService {
     @Autowired
     private InstrumentoService instrumentoService;
 
-    public void savePedido(PedidoDTO pedidoDTO) {
+    @Transactional
+    public Pedido savePedido(PedidoDTO pedidoDTO) {
         Pedido pedido = toEntity(pedidoDTO);
-        Pedido pedidoGuardado = pedidoRepo.save(pedido);
-
-        detallePedidoService.saveMultipleDetallePedidos(pedidoDTO.getDetallePedidos(), pedidoGuardado);
-
-        // TODO: Esto podria cambiarlo para que se calcule en base a la entidad en lugar del dto
-        Double total = calcularTotalPedido(pedidoDTO.getDetallePedidos());
-        pedidoGuardado.setTotalPedido(total);
-
-        pedidoRepo.save(pedidoGuardado);
+        return pedidoRepo.save(pedido);
     }
 
     public PedidoResponseDTO getPedidoById(Long id) {
@@ -52,9 +47,22 @@ public class PedidoService {
 
     // MAPPERS
     private Pedido toEntity(PedidoDTO pedidoDTO) {
-        return Pedido.builder()
+        Pedido pedido = Pedido.builder()
                 .fechaPedido(LocalDate.now())
+                .titulo("Pedido Musica Hendrix")
+                .totalPedido(0.0)
+                .detallePedidos(new ArrayList<>())
                 .build();
+
+        // DetallePedidos
+        for (DetallePedidoDTO detalleDTO : pedidoDTO.getDetallePedidos()) {
+            DetallePedido detalle = detallePedidoService.toEntity(detalleDTO);
+            detalle.setPedido(pedido);
+            pedido.getDetallePedidos().add(detalle);
+        }
+        pedido.setTotalPedido(calcularTotalPedido(pedido.getDetallePedidos()));
+
+        return pedido;
     }
 
     public PedidoResponseDTO toDTO(Pedido pedido) {
@@ -69,12 +77,12 @@ public class PedidoService {
     }
 
     // Metodos adicionales
-    public Double calcularTotalPedido(List<DetallePedidoDTO> detallePedidos) {
-        Double totalPedido = 0.0;
-        for (DetallePedidoDTO detallePedido : detallePedidos) {
-            InstrumentoDTO instrumentoDTO = instrumentoService.getInstrumentoById(detallePedido.getInstrumentoId());
-            totalPedido += instrumentoDTO.getPrecio() * detallePedido.getCantidad();
+    private Double calcularTotalPedido(List<DetallePedido> detallePedidos) {
+        Double totalVenta = 0.0;
+
+        for (DetallePedido detallePedido : detallePedidos) {
+            totalVenta += detallePedido.getSubTotal();
         }
-        return totalPedido;
+        return totalVenta;
     }
 }
