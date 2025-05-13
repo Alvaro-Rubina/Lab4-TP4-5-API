@@ -31,7 +31,7 @@ public class InstrumentoDTO {
 
     @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio no puede ser negativo")
-    private BigDecimal precio;
+    private Double precio;
 
     @NotBlank(message = "El costo de envio es obligatorio")
     private String costoEnvio;

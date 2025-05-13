@@ -23,7 +23,7 @@ public class Instrumento {
     @Column(length = 500)
     private String descripcion;
     private String imagen;
-    private BigDecimal precio;
+    private Double precio;
     private String costoEnvio;
     private int cantidadVendida;
     private boolean activo;
