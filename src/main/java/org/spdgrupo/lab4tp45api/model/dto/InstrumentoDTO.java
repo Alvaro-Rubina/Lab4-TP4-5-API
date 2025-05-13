@@ -3,6 +3,8 @@ package org.spdgrupo.lab4tp45api.model.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -29,7 +31,7 @@ public class InstrumentoDTO {
 
     @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio no puede ser negativo")
-    private Double precio;
+    private BigDecimal precio;
 
     @NotBlank(message = "El costo de envio es obligatorio")
     private String costoEnvio;

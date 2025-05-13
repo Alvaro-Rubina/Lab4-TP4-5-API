@@ -3,6 +3,8 @@ package org.spdgrupo.lab4tp45api.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -21,7 +23,7 @@ public class Instrumento {
     @Column(length = 500)
     private String descripcion;
     private String imagen;
-    private Double precio;
+    private BigDecimal precio;
     private String costoEnvio;
     private int cantidadVendida;
     private boolean activo;
