@@ -1,7 +1,12 @@
 package org.spdgrupo.lab4tp45api.controller;
 
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import org.spdgrupo.lab4tp45api.model.PreferenceMP;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoResponseDTO;
+import org.spdgrupo.lab4tp45api.model.entity.Pedido;
+import org.spdgrupo.lab4tp45api.service.MercadoPagoService;
 import org.spdgrupo.lab4tp45api.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +22,23 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
+    @Autowired
+    private MercadoPagoService mercadoPagoService;
+
     @PostMapping
     public ResponseEntity<String> savePedido(@RequestBody PedidoDTO pedidoDTO) {
         pedidoService.savePedido(pedidoDTO);
         return ResponseEntity.ok("Pedido guardado correctamente");
     }
+
+    // TODO: Habria que aplicar websockets acá
+    @PostMapping("/mp")
+    public ResponseEntity<PreferenceMP> savePedidoMP(@RequestBody PedidoDTO pedidoDTO) throws MPException, MPApiException {
+        Pedido pedido = pedidoService.savePedido(pedidoDTO);
+        PreferenceMP preferenceMP = mercadoPagoService.createPreference(pedido);
+        return ResponseEntity.ok(preferenceMP);
+    }
+
 
     @GetMapping("/{id}")
     @ResponseBody

@@ -22,6 +22,6 @@ public class Pedido {
     private LocalDate fechaPedido;
     private Double totalPedido;
 
-    @OneToMany(mappedBy = "pedido", orphanRemoval = true)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePedido> detallePedidos = new ArrayList<>();
 }

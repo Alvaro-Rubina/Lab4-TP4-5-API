@@ -6,18 +6,12 @@ import org.spdgrupo.lab4tp45api.model.dto.detallepedido.DetallePedidoResponseDTO
 import org.spdgrupo.lab4tp45api.model.entity.DetallePedido;
 import org.spdgrupo.lab4tp45api.model.entity.Instrumento;
 import org.spdgrupo.lab4tp45api.model.entity.Pedido;
-import org.spdgrupo.lab4tp45api.repository.DetallePedidoRepository;
 import org.spdgrupo.lab4tp45api.repository.InstrumentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class DetallePedidoService {
-
-    @Autowired
-    private DetallePedidoRepository detallePedidoRepo;
 
     @Autowired
     private InstrumentoRepository instrumentoRepo;
@@ -25,16 +19,7 @@ public class DetallePedidoService {
     @Autowired
     private InstrumentoService instrumentoService;
 
-    public void saveMultipleDetallePedidos(List<DetallePedidoDTO> dtoList, Pedido pedido) {
-        for (DetallePedidoDTO dto : dtoList) {
-            DetallePedido detalle = toEntity(dto, pedido);
-            detallePedidoRepo.save(detalle);
-        }
-    }
-
-
-    // MAPPERS
-    public DetallePedido toEntity(DetallePedidoDTO dto, Pedido pedido) {
+    public DetallePedido toEntity(DetallePedidoDTO dto) {
         Instrumento instrumento = instrumentoRepo.findById(dto.getInstrumentoId())
                 .orElseThrow(() -> new NotFoundException("Instrumento con el id " + dto.getInstrumentoId() + " no encontrado"));
 
@@ -44,7 +29,6 @@ public class DetallePedidoService {
                 .cantidad(dto.getCantidad())
                 .subTotal(subTotal)
                 .instrumento(instrumento)
-                .pedido(pedido)
                 .build();
     }
 
