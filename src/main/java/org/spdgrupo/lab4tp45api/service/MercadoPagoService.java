@@ -10,12 +10,9 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.preference.Preference;
 import jakarta.annotation.PostConstruct;
 import org.spdgrupo.lab4tp45api.model.PreferenceMP;
-import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
-import org.spdgrupo.lab4tp45api.model.dto.detallepedido.DetallePedidoDTO;
 import org.spdgrupo.lab4tp45api.model.entity.DetallePedido;
 import org.spdgrupo.lab4tp45api.model.entity.Instrumento;
 import org.spdgrupo.lab4tp45api.model.entity.Pedido;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,9 +21,6 @@ import java.util.List;
 
 @Service
 public class MercadoPagoService {
-
-    @Autowired
-    private InstrumentoService instrumentoService;
 
     private String testToken = "APP_USR-2825980193305398-051118-5a14ef889bb1615f3eb307c0afe56eea-2432010473";
 
