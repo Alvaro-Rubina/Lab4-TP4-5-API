@@ -21,6 +21,10 @@ public class UsuarioService {
 
     // TODO: Acá quizas poner mas logicas o validaciones para registrar
     public UsuarioResponseDTO register(UsuarioDTO usuarioDTO) {
+        if (usuarioRepo.existsByNombreUsuario(usuarioDTO.getNombreUsuario())) {
+            throw new IllegalArgumentException("Ya existe un usuario con ese nombre de usuario, por favor intente con otro");
+        }
+
         Usuario usuario = toEntity(usuarioDTO);
         usuario = usuarioRepo.save(usuario);
         return toDTO(usuario);

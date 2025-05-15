@@ -15,6 +15,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String nombreUsuario;
     private String clave;
     @Enumerated(EnumType.STRING)
