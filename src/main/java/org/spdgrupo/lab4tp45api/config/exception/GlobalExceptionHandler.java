@@ -30,6 +30,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("Error en la API de MercadoPago: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ExistingUserException.class)
+    public ResponseEntity<String> handleExistingUserException(ExistingUserException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         if (ex.getCause() instanceof InvalidFormatException) {
@@ -38,13 +43,15 @@ public class GlobalExceptionHandler {
                 String valoresValidos = Arrays.stream(cause.getTargetType().getEnumConstants())
                         .map(Object::toString)
                         .collect(Collectors.joining(", "));
+                String nombreCampo = cause.getTargetType().getSimpleName();
                 return new ResponseEntity<>(
-                        "Valor inválido: '" + cause.getValue() + "'. Los valores permitidos son: [" + valoresValidos + "]",
+                        nombreCampo + " inválido: '" + cause.getValue() + "'. Los valores permitidos son: [" + valoresValidos + "]",
                         HttpStatus.BAD_REQUEST
                 );
             }
         }
         return new ResponseEntity<>("Error en el formato del JSON: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 
 }
