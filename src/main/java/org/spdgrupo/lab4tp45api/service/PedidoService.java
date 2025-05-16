@@ -31,6 +31,13 @@ public class PedidoService {
     @Transactional
     public Pedido savePedido(PedidoDTO pedidoDTO) {
         Pedido pedido = toEntity(pedidoDTO);
+
+        // Aumento la cantidad de vendidos de instrumento
+        for (DetallePedido detallePedido : pedido.getDetallePedidos()) {
+            Long idInstrumento = detallePedido.getInstrumento().getId();
+            int cantidadVendida = detallePedido.getCantidad();
+            instrumentoService.aumentarCantidadVendida(idInstrumento, cantidadVendida);
+        }
         return pedidoRepo.save(pedido);
     }
 
