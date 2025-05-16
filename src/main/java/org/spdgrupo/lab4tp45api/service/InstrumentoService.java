@@ -98,6 +98,13 @@ public class InstrumentoService {
         instrumentoRepo.save(instrumento);
     }
 
+    public void aumentarCantidadVendida(Long id, int cantidad) {
+        Instrumento instrumento = instrumentoRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Instrumento con el id " + id + " no encontrado"));
+        instrumento.setCantidadVendida(instrumento.getCantidadVendida() + cantidad);
+        instrumentoRepo.save(instrumento);
+    }
+
     // MAPPERS
     private Instrumento toEntity(InstrumentoDTO instrumentoDTO) {
         return Instrumento.builder()
