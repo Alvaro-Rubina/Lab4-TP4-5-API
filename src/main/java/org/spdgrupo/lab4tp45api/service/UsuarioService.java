@@ -1,6 +1,7 @@
 package org.spdgrupo.lab4tp45api.service;
 
 import lombok.RequiredArgsConstructor;
+import org.spdgrupo.lab4tp45api.config.exception.ExistingUserException;
 import org.spdgrupo.lab4tp45api.config.exception.NotFoundException;
 import org.spdgrupo.lab4tp45api.model.dto.usuario.UsuarioDTO;
 import org.spdgrupo.lab4tp45api.model.dto.usuario.UsuarioResponseDTO;
@@ -22,7 +23,7 @@ public class UsuarioService {
     // TODO: Acá quizas poner mas logicas o validaciones para registrar
     public UsuarioResponseDTO register(UsuarioDTO usuarioDTO) {
         if (usuarioRepo.existsByNombreUsuario(usuarioDTO.getNombreUsuario())) {
-            throw new IllegalArgumentException("Ya existe un usuario con ese nombre de usuario, por favor intente con otro");
+            throw new ExistingUserException("El nombre de usuario " + usuarioDTO.getNombreUsuario() + " ya existe");
         }
 
         Usuario usuario = toEntity(usuarioDTO);
