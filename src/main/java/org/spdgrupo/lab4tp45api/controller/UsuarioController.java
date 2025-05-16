@@ -24,12 +24,8 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<UsuarioResponseDTO> login(@Valid @RequestBody UsuarioDTO usuarioDTO) {
-        try {
-            UsuarioResponseDTO usuarioResponseDTO = usuarioService.login(usuarioDTO);
-            return ResponseEntity.ok(usuarioResponseDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        UsuarioResponseDTO usuarioResponseDTO = usuarioService.login(usuarioDTO);
+        return ResponseEntity.ok(usuarioResponseDTO);
     }
 
 }
