@@ -9,9 +9,11 @@ import org.spdgrupo.lab4tp45api.model.entity.Pedido;
 import org.spdgrupo.lab4tp45api.service.MercadoPagoService;
 import org.spdgrupo.lab4tp45api.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,7 +41,6 @@ public class PedidoController {
         return ResponseEntity.ok(preferenceMP);
     }
 
-
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<PedidoResponseDTO> getPedidoById(@PathVariable Long id) {
@@ -51,6 +52,14 @@ public class PedidoController {
     @ResponseBody
     public ResponseEntity<List<PedidoResponseDTO>> getAllPedidos() {
         List<PedidoResponseDTO> pedidos = pedidoService.getAllPedidos();
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/filtrar")
+    @ResponseBody
+    public ResponseEntity<List<PedidoResponseDTO>> getPedidosByFechaRange (@RequestParam LocalDate fechaInicio,
+                                                                           @RequestParam LocalDate fechaFin) {
+        List<PedidoResponseDTO> pedidos = pedidoService.getPedidosByFechaRange(fechaInicio, fechaFin);
         return ResponseEntity.ok(pedidos);
     }
 }

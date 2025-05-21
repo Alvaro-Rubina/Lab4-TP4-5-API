@@ -52,6 +52,14 @@ public class PedidoService {
         return pedidos.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    public List<PedidoResponseDTO> getPedidosByFechaRange(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
+        }
+        List<Pedido> pedidos = pedidoRepo.findByFechaPedidoBetween(startDate, endDate);
+        return pedidos.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
     // MAPPERS
     private Pedido toEntity(PedidoDTO pedidoDTO) {
         Pedido pedido = Pedido.builder()
