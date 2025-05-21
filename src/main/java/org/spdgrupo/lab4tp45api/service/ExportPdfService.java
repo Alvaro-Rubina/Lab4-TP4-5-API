@@ -30,8 +30,8 @@ public class ExportPdfService {
             PdfWriter.getInstance(document, outputStream);
             document.open();
 
-            // Título: nombre del instrumento
-            Font titulo = new Font(Font.FontFamily.HELVETICA, 22, Font.BOLD, BaseColor.BLUE);
+            // Título: nombre del instrumento (negro, normal)
+            Font titulo = new Font(Font.FontFamily.HELVETICA, 22, Font.NORMAL, BaseColor.BLACK);
             Paragraph header = new Paragraph(instrumento.getInstrumento(), titulo);
             header.setAlignment(Element.ALIGN_CENTER);
             document.add(header);
@@ -51,8 +51,8 @@ public class ExportPdfService {
                 }
             }
 
-            // Precio grande y centrado usando tabla de una celda
-            Font precioFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD, BaseColor.DARK_GRAY);
+            // Precio grande y centrado usando tabla de una celda (negro, normal)
+            Font precioFont = new Font(Font.FontFamily.HELVETICA, 18, Font.NORMAL, BaseColor.BLACK);
             PdfPTable precioTable = new PdfPTable(1);
             precioTable.setWidthPercentage(80);
             precioTable.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -64,7 +64,8 @@ public class ExportPdfService {
 
             document.add(new Paragraph(" ")); // Espacio
 
-            // Tabla de atributos (2 columnas)
+            // Tabla de atributos: 2 columnas, 2 filas, sin bordes
+            Font labelFont = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD);
             Font valueFont = new Font(Font.FontFamily.HELVETICA, 13, Font.NORMAL);
 
             PdfPTable table = new PdfPTable(2);
@@ -72,28 +73,12 @@ public class ExportPdfService {
             table.setHorizontalAlignment(Element.ALIGN_CENTER);
 
             // Fila 1: Marca y Modelo
-            table.addCell(createLeftCell("Marca: " + instrumento.getMarca(), valueFont));
-            table.addCell(createLeftCell("Modelo: " + instrumento.getModelo(), valueFont));
+            table.addCell(createCell("Marca: ", instrumento.getMarca(), labelFont, valueFont));
+            table.addCell(createCell("Modelo: ", instrumento.getModelo(), labelFont, valueFont));
 
-            // Fila 2: Costo Envío y Cantidad Vendida
-            table.addCell(createLeftCell("Costo Envío: " + instrumento.getCostoEnvio(), valueFont));
-            table.addCell(createLeftCell("Cantidad Vendida: " + instrumento.getCantidadVendida(), valueFont));
-
-            // Fila 3: Categoría y Activo
-            String categoria = instrumento.getCategoria() != null ? instrumento.getCategoria().getNombre() : "Sin categoría";
-            table.addCell(createLeftCell("Categoría: " + categoria, valueFont));
-            table.addCell(createLeftCell("Activo: " + (instrumento.isActivo() ? "Sí" : "No"), valueFont));
-
-            // Fila 4: Descripción (solo columna izquierda)
-            PdfPCell descCell = new PdfPCell(new Phrase("Descripción: " + instrumento.getDescripcion(), valueFont));
-            descCell.setHorizontalAlignment(Element.ALIGN_LEFT);
-            descCell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(descCell);
-
-            // Celda vacía a la derecha
-            PdfPCell emptyCell = new PdfPCell(new Phrase(""));
-            emptyCell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(emptyCell);
+            // Fila 2: Costo Envío y Descripción
+            table.addCell(createCell("Costo Envío: ", instrumento.getCostoEnvio(), labelFont, valueFont));
+            table.addCell(createCell("Descripción: ", instrumento.getDescripcion(), labelFont, valueFont));
 
             document.add(table);
 
@@ -106,10 +91,16 @@ public class ExportPdfService {
         }
     }
 
-    private PdfPCell createLeftCell(String text, Font font) {
-        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+    private PdfPCell createCell(String label, String value, Font labelFont, Font valueFont) {
+        Phrase phrase = new Phrase();
+        phrase.add(new Chunk(label, labelFont));
+        phrase.add(new Chunk(value, valueFont));
+        PdfPCell cell = new PdfPCell(phrase);
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
+        cell.setPaddingLeft(60f);
+        cell.setPaddingTop(8f);
+        cell.setPaddingBottom(8f);
         return cell;
     }
 }
