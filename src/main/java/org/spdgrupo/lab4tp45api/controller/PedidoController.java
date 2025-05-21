@@ -2,17 +2,22 @@ package org.spdgrupo.lab4tp45api.controller;
 
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.spdgrupo.lab4tp45api.model.PreferenceMP;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoResponseDTO;
 import org.spdgrupo.lab4tp45api.model.entity.Pedido;
+import org.spdgrupo.lab4tp45api.service.ExcelService;
 import org.spdgrupo.lab4tp45api.service.MercadoPagoService;
 import org.spdgrupo.lab4tp45api.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,6 +31,9 @@ public class PedidoController {
 
     @Autowired
     private MercadoPagoService mercadoPagoService;
+
+    @Autowired
+    private ExcelService excelService;
 
     @PostMapping
     public ResponseEntity<String> savePedido(@RequestBody PedidoDTO pedidoDTO) {
@@ -55,12 +63,24 @@ public class PedidoController {
         return ResponseEntity.ok(pedidos);
     }
 
-    @GetMapping("/filtrar")
+    @GetMapping("/reportes")
     @ResponseBody
-    public ResponseEntity<List<PedidoResponseDTO>> getPedidosByFechaRange (@RequestParam LocalDate fechaInicio,
-                                                                           @RequestParam LocalDate fechaFin) {
-        List<PedidoResponseDTO> pedidos = pedidoService.getPedidosByFechaRange(fechaInicio, fechaFin);
-        return ResponseEntity.ok(pedidos);
+    public ResponseEntity<byte[]> generarReporteExcel(@RequestParam LocalDate fechaInicio,
+                                                 @RequestParam LocalDate fechaFin) throws IOException
+    {
+        SXSSFWorkbook libroExcel = excelService.generarReporteExcel(fechaInicio, fechaFin);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        libroExcel.write(stream);
+        libroExcel.dispose();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "reporte_pedidos.xlsx");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(stream.toByteArray());
+
     }
 
     @GetMapping("/bar-chart")
