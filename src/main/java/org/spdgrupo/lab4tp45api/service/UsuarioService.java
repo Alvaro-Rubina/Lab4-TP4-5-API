@@ -54,7 +54,6 @@ public class UsuarioService {
     private UsuarioResponseDTO toDTO (Usuario usuario) {
         return UsuarioResponseDTO.builder()
                 .nombreUsuario(usuario.getNombreUsuario())
-                /*.clave(usuario.getClave())*/ // NO debería devolver la clave del usuario, aún esté encriptada
                 .rol(usuario.getRol())
                 .build();
     }
