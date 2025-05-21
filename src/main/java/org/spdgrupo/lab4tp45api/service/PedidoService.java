@@ -7,6 +7,7 @@ import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoDTO;
 import org.spdgrupo.lab4tp45api.model.dto.pedido.PedidoResponseDTO;
 import org.spdgrupo.lab4tp45api.model.entity.DetallePedido;
 import org.spdgrupo.lab4tp45api.model.entity.Pedido;
+import org.spdgrupo.lab4tp45api.repository.DetallePedidoRepository;
 import org.spdgrupo.lab4tp45api.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepo;
+
+    @Autowired
+    private DetallePedidoRepository detallePedidoRepo;
 
     @Autowired
     private DetallePedidoService detallePedidoService;
@@ -59,6 +63,38 @@ public class PedidoService {
         List<Pedido> pedidos = pedidoRepo.findByFechaPedidoBetween(startDate, endDate);
         return pedidos.stream().map(this::toDTO).collect(Collectors.toList());
     }
+
+    public List<List<Object>> getPedidosGroupedByMesAnio() {
+        List<Object[]> resultados = pedidoRepo.countPedidosGroupedByMesAnio();
+
+        List<List<Object>> data = new ArrayList<>();
+        data.add(List.of("Mes", "Cantidad de Pedidos"));
+
+        for (Object[] row : resultados) {
+            String mesAnio = (String) row[0]; // Ej: "2024-05"
+            Long cantidad = (Long) row[1];
+            data.add(List.of(mesAnio, cantidad));
+        }
+
+        return data;
+    }
+
+    public List<List<Object>> getPedidosGroupedByInstrumento() {
+        List<Object[]> resultados = detallePedidoRepo.countPedidosByInstrumento();
+
+        List<List<Object>> data = new ArrayList<>();
+        data.add(List.of("Instrumento", "Cantidad de Pedidos"));
+
+        for (Object[] row : resultados) {
+            String nombreInstrumento = (String) row[0];
+            Long cantidad = (Long) row[1];
+            data.add(List.of(nombreInstrumento, cantidad));
+        }
+
+        return data;
+    }
+
+
 
     // MAPPERS
     private Pedido toEntity(PedidoDTO pedidoDTO) {

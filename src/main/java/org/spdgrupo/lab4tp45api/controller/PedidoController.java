@@ -62,4 +62,16 @@ public class PedidoController {
         List<PedidoResponseDTO> pedidos = pedidoService.getPedidosByFechaRange(fechaInicio, fechaFin);
         return ResponseEntity.ok(pedidos);
     }
+
+    @GetMapping("/bar-chart")
+    public ResponseEntity<List<List<Object>>> getBarChartData() {
+        return ResponseEntity.ok(pedidoService.getPedidosGroupedByMesAnio());
+    }
+
+    @GetMapping("/pie-chart")
+    public ResponseEntity<List<List<Object>>> getPieChartData() {
+        return ResponseEntity.ok(pedidoService.getPedidosGroupedByInstrumento());
+    }
+
 }
+
