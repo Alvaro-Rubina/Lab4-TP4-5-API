@@ -2,8 +2,11 @@ package org.spdgrupo.lab4tp45api.controller;
 
 import jakarta.validation.Valid;
 import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
+import org.spdgrupo.lab4tp45api.service.ExportPdfService;
 import org.spdgrupo.lab4tp45api.service.InstrumentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,8 @@ class InstrumentoController {
 
     @Autowired
     private InstrumentoService instrumentoService;
+    @Autowired
+    private ExportPdfService exportPdfService;
 
     @PostMapping
     public ResponseEntity<String> saveInstrumento(@Valid @RequestBody InstrumentoDTO instrumentoDTO) {
@@ -36,6 +41,19 @@ class InstrumentoController {
         List<InstrumentoDTO> instrumentos = instrumentoService.getAllInstrumentos();
         return ResponseEntity.ok(instrumentos);
     }
+
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> exportInstrumentoPdf(@PathVariable Long id) {
+        byte[] pdfBytes = exportPdfService.exportInstrumentoPdf(id);
+        if (pdfBytes == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=instrumento_" + id + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateInstrumento(@PathVariable Long id,

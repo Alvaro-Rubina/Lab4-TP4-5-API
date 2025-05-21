@@ -1,26 +1,35 @@
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\PreferenceMP.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\dto\InstrumentoDTO.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\controller\InstrumentoController.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\service\MercadoPagoService.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\dto\detallepedido\DetallePedidoDTO.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\dto\pedido\PedidoDTO.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\service\PedidoService.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\dto\pedido\PedidoResponseDTO.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\entity\Instrumento.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\repository\PedidoRepository.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\entity\DetallePedido.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\dto\CategoriaInstrumentoDTO.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\Lab4Tp45ApiApplication.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\service\CategoriaInstrumentoService.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\controller\CategoriaInstrumentoController.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\repository\CategoriaInstrumentoRepository.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\config\exception\NotFoundException.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\entity\Pedido.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\repository\InstrumentoRepository.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\dto\detallepedido\DetallePedidoResponseDTO.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\service\InstrumentoService.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\config\exception\GlobalExceptionHandler.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\service\DetallePedidoService.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\model\entity\CategoriaInstrumento.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\controller\PedidoController.java
-D:\GIT\Proyectos\LABORATORIO-4\Lab4-TP4-5-API\src\main\java\org\spdgrupo\lab4tp45api\repository\DetallePedidoRepository.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\pedido\PedidoResponseDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\entity\DetallePedido.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\service\CategoriaInstrumentoService.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\controller\UsuarioController.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\config\exception\GlobalExceptionHandler.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\repository\PedidoRepository.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\PreferenceMP.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\config\exception\ExistingUserException.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\entity\CategoriaInstrumento.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\service\PedidoService.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\service\MercadoPagoService.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\entity\Pedido.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\controller\InstrumentoController.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\Lab4Tp45ApiApplication.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\entity\Instrumento.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\config\exception\ErrorResponse.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\detallepedido\DetallePedidoDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\pedido\PedidoDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\config\exception\NotFoundException.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\controller\CategoriaInstrumentoController.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\repository\CategoriaInstrumentoRepository.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\service\UsuarioService.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\repository\DetallePedidoRepository.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\repository\UsuarioRepository.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\usuario\UsuarioResponseDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\enums\Rol.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\CategoriaInstrumentoDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\entity\Usuario.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\repository\InstrumentoRepository.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\service\InstrumentoService.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\InstrumentoDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\usuario\UsuarioDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\controller\PedidoController.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\model\dto\detallepedido\DetallePedidoResponseDTO.java
+D:\UTN\Lab 4\TP8 Back\src\main\java\org\spdgrupo\lab4tp45api\service\DetallePedidoService.java
