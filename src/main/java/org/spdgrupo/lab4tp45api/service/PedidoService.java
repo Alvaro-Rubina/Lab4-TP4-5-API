@@ -68,7 +68,7 @@ public class PedidoService {
         List<Object[]> resultados = pedidoRepo.countPedidosGroupedByMesAnio();
 
         List<List<Object>> data = new ArrayList<>();
-        data.add(List.of("Mes", "Cantidad de Pedidos"));
+        data.add(List.of("Año - Mes", "Cantidad de Pedidos"));
 
         for (Object[] row : resultados) {
             String mesAnio = (String) row[0]; // Ej: "2024-05"
