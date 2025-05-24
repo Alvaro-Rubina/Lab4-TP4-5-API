@@ -1,8 +1,9 @@
 package org.spdgrupo.lab4tp45api.controller;
 
+import com.itextpdf.text.DocumentException;
 import jakarta.validation.Valid;
 import org.spdgrupo.lab4tp45api.model.dto.InstrumentoDTO;
-import org.spdgrupo.lab4tp45api.service.ExportPdfService;
+import org.spdgrupo.lab4tp45api.service.PdfService;
 import org.spdgrupo.lab4tp45api.service.InstrumentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,8 +21,9 @@ class InstrumentoController {
 
     @Autowired
     private InstrumentoService instrumentoService;
+
     @Autowired
-    private ExportPdfService exportPdfService;
+    private PdfService pdfService;
 
     @PostMapping
     public ResponseEntity<String> saveInstrumento(@Valid @RequestBody InstrumentoDTO instrumentoDTO) {
@@ -42,18 +45,14 @@ class InstrumentoController {
         return ResponseEntity.ok(instrumentos);
     }
 
-    @GetMapping("/{id}/pdf")
-    public ResponseEntity<byte[]> exportInstrumentoPdf(@PathVariable Long id) {
-        byte[] pdfBytes = exportPdfService.exportInstrumentoPdf(id);
-        if (pdfBytes == null) {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/pdf")
+    public ResponseEntity<byte[]> exportInstrumentoPdf(@RequestParam Long idInstrumento) throws IOException, DocumentException {
+        byte[] pdfBytes = pdfService.exportInstrumentoPdf(idInstrumento);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=instrumento_" + id + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=instrumento_" + idInstrumento + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateInstrumento(@PathVariable Long id,

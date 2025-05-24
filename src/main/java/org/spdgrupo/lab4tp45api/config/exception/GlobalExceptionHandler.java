@@ -1,6 +1,7 @@
 package org.spdgrupo.lab4tp45api.config.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.itextpdf.text.DocumentException;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import org.springframework.http.HttpStatus;
@@ -99,12 +100,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IOException.class)
     public ResponseEntity<ErrorResponse> handleIOException(IOException ex) {
         ErrorResponse error = new ErrorResponse(
-                "Error al generar el archivo Excel: " + ex.getMessage(),
-                "EXCEL_GENERATION_ERROR",
+                "Error al procesar el archivo: " + ex.getMessage(),
+                "FILE_PROCESSING_ERROR",
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(DocumentException.class)
+    public ResponseEntity<ErrorResponse> handleDocumentException(DocumentException ex) {
+        ErrorResponse error = new ErrorResponse(
+                "Error al generar el documento PDF: " + ex.getMessage(),
+                "PDF_GENERATION_ERROR",
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 
 
 
